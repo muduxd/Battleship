@@ -6,12 +6,12 @@ export const Ships = () => {
   const mapArr = ships.map((ship, index) => {
     return (
       <div
+        id="box"
         key={index}
         style={{
-          color: "red",
-          backgroundColor: "lightgray",
-          border: "1px solid grey",
-          width: ship.size * 10 + "px",
+          backgroundColor: "lightgrey",
+          border: "1px solid black",
+          width: ship.size * 15 + "px",
           height: "10px",
           marginBottom: "5px",
         }}
@@ -21,10 +21,15 @@ export const Ships = () => {
   return (
     <div
       style={{
-        width: "170px",
+        width: "110px",
+        margin: "0px",
       }}
     >
-      <h1>Your Ships</h1>
+      <h1
+        style={{ fontSize: "20px", fontFamily: "Arial, Helvetica, sans-serif" }}
+      >
+        Your Ships
+      </h1>
       <div
         style={{
           alignItems: "flex-end",

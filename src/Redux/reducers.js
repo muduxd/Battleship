@@ -25,4 +25,8 @@ export const listShips = () => {
   ];
 };
 
-export const appReducer = combineReducers({ listShips });
+export const listSquares = () => {
+  return [];
+};
+
+export const appReducer = combineReducers({ listShips, listSquares });
