@@ -14,7 +14,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <div>
-        <h1 className="title">Battleship</h1>
+        <h1 style={{ textAlign: "center" }}>Battleship</h1>
       </div>
       <Ships />
       <Grid />

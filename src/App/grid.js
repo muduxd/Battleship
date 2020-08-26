@@ -9,6 +9,19 @@ export const Grid = () => {
         width: "350px",
         height: "350px",
       }}
-    ></div>
+    >
+      <div className="square"></div>
+      <div className="square"></div>
+      <div className="square"></div>
+      <div className="square"></div>
+      <div className="square"></div>
+      <div className="square"></div>
+      <div className="square"></div>
+      <div className="square"></div>
+      <div className="square"></div>
+      <div className="square"></div>
+      <div className="square"></div>
+      <div className="square"></div>
+    </div>
   );
 };
