@@ -10,5 +10,6 @@ body {
   display: flex;
   justify-content: right;
   align-items: flex-start;
+  flex-wrap: wrap;
   font-size: 80px;
 }

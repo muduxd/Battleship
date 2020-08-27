@@ -22,11 +22,15 @@ export const Ships = () => {
     <div
       style={{
         width: "110px",
-        margin: "0px",
+        display: "flex",
+        flexWrap: "wrap",
       }}
     >
       <h1
-        style={{ fontSize: "20px", fontFamily: "Arial, Helvetica, sans-serif" }}
+        style={{
+          fontSize: "20px",
+          fontFamily: "Arial, Helvetica, sans-serif",
+        }}
       >
         Your Ships
       </h1>
