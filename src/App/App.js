@@ -13,11 +13,20 @@ const store = createStore(
 const App = () => {
   return (
     <Provider store={store}>
-      <div>
-        <h1>Battleship</h1>
+      <div
+        style={{
+          textAlign: "center",
+          fontSize: "30px",
+          fontFamily: "sans-serif",
+          fontWeight: "bolder",
+        }}
+      >
+        Battleship
       </div>
-      <Ships />
-      <Grid />
+      <div style={{ display: "flex", flexDirection: "row", marginTop: "50px" }}>
+        <Ships />
+        <Grid />
+      </div>
     </Provider>
   );
 };

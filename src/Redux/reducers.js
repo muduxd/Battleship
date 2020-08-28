@@ -1,5 +1,13 @@
 import { combineReducers } from "redux";
 
+export const initialState = {
+  board: {
+    gridSize: 10,
+    boatPos: [],
+    currentShip: 0,
+  },
+};
+
 export const listShips = () => {
   return [
     {
@@ -25,8 +33,8 @@ export const listShips = () => {
   ];
 };
 
-export const listSquares = () => {
-  return [];
+export const board = (state = initialState.board, action) => {
+  return state;
 };
 
-export const appReducer = combineReducers({ listShips, listSquares });
+export const appReducer = combineReducers({ listShips, board });

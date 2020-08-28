@@ -23,7 +23,8 @@ export const Ships = () => {
       style={{
         width: "110px",
         display: "flex",
-        flexWrap: "wrap",
+        flexDirection: "column",
+        marginRight: "30px",
       }}
     >
       <h1
