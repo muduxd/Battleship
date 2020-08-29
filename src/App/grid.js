@@ -6,16 +6,38 @@ const boardMouseOver = (e) => {
   var attribute = e.target;
   var row = attribute.getAttribute("row");
   var col = attribute.getAttribute("collumn");
-  console.log(row);
-  console.log(col);
+  if (row && col) {
+    e.target.style.backgroundColor = "aqua";
+  }
+};
+
+const boardMouseOut = (e) => {
+  var attribute = e.target;
+  var row = attribute.getAttribute("row");
+  var col = attribute.getAttribute("collumn");
+  if (row && col) {
+    e.target.style.backgroundColor = "white";
+  }
+};
+
+const leftClick = () => {
+  console.log("left");
+};
+
+const rightClick = () => {
+  console.log("right");
 };
 
 export const Grid = () => {
   const boardEl = useRef(null);
   useEffect(() => {
+    boardEl.current.addEventListener("click", leftClick);
+    boardEl.current.addEventListener("contextmenu", rightClick);
     boardEl.current.addEventListener("mouseover", boardMouseOver);
-    return () =>
+    boardEl.current.addEventListener("mouseout", boardMouseOut);
+    return () => {
       boardEl.current.removeEventListener("mouseover", boardMouseOver);
+    };
   });
   return (
     <div
