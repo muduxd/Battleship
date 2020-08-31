@@ -1,18 +1,26 @@
 import React, { useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { DllPlugin } from "webpack";
 
 var index = 0;
 var isPlaced = false;
+var el = [];
+
+//MOUSE EVENTS
 
 const boardMouseOver = (e) => {
   var row = e.target.getAttribute("row");
   var col = e.target.getAttribute("collumn");
-  var col1 = parseInt(col) + 1;
-  var el1 = document.getElementById(String(row) + String(col1));
+  var col1 = col;
   if (row && col) {
     e.target.style.backgroundColor = "aqua";
-    el1.style.backgroundColor = "aqua";
   }
+  // for (var i = 1; i <= 5; i++) {
+  //   var col1 = parseInt(col1) + 1;
+  //   var aux = document.getElementById(String(row) + String(col1));
+  //   el.push(aux);
+  // }
+  console.log(el);
 };
 
 const boardMouseOut = (e) => {
@@ -27,6 +35,7 @@ const boardMouseOut = (e) => {
 const leftClick = () => {
   var el = document.getElementById(index);
   el.style.border = "1px solid blue";
+
   el.style.backgroundColor = "aqua";
   console.log(index);
   if (index < 4) {
@@ -110,7 +119,7 @@ export const Grid = () => {
   );
 };
 
-//rendering elements
+//RENDERING ELEMENTS
 
 const RenderSquares = () => {
   const board = useSelector((state) => state.board);
@@ -163,4 +172,9 @@ const RenderLetters = () => {
     i = i.substring(0, 0) + String.fromCharCode(i.charCodeAt(0) + 1);
   }
   return arr;
+};
+
+const RenderButtons = () => {
+  var startButton = <button>Start</button>;
+  return startButton;
 };
