@@ -6,7 +6,7 @@ export const Ships = () => {
   const mapArr = ships.map((ship, index) => {
     return (
       <div
-        id="box"
+        id={index}
         key={index}
         style={{
           backgroundColor: "lightgrey",

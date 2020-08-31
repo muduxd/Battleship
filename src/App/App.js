@@ -23,7 +23,14 @@ const App = () => {
       >
         Battleship
       </div>
-      <div style={{ display: "flex", flexDirection: "row", marginTop: "50px" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          marginTop: "50px",
+          justifyContent: "center",
+        }}
+      >
         <Ships />
         <Grid />
       </div>

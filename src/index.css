@@ -13,3 +13,11 @@ body {
   flex-wrap: wrap;
   font-size: 80px;
 }
+
+.side {
+  display: flex;
+  font-size: 21px;
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+}
