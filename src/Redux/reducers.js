@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import { NEXT_SHIP, PLACE_SHIP } from "./actions";
 
 export const initialState = {
   board: {
@@ -6,10 +7,7 @@ export const initialState = {
     boatPos: [],
     currentShip: 0,
   },
-};
-
-export const listShips = () => {
-  return [
+  ships: [
     {
       name: "Carrier",
       size: 5,
@@ -30,11 +28,30 @@ export const listShips = () => {
       name: "Patrol Boat",
       size: 2,
     },
-  ];
+  ],
 };
 
-export const board = (state = initialState.board, action) => {
+export const ships = (state = initialState.ships) => {
   return state;
 };
 
-export const appReducer = combineReducers({ listShips, board });
+export const board = (state = initialState.board, action) => {
+  if (action.type === NEXT_SHIP) {
+    return {
+      ...state,
+      currentShip: ++state.currentShip,
+    };
+  }
+  if (action.type === PLACE_SHIP) {
+    const boatPos = [...state.boatPos];
+    boatPos[action.payload.shipPos] = action.payload.cords;
+    console.log(action.payload.shipPos);
+    return {
+      ...state,
+      boatPos,
+    };
+  }
+  return state;
+};
+
+export const appReducer = combineReducers({ ships, board });

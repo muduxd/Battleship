@@ -2,15 +2,16 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 export const Ships = () => {
-  const ships = useSelector((state) => state.listShips);
+  const ships = useSelector((state) => state.ships);
+  const currentShip = useSelector((state) => state.board.currentShip);
   const mapArr = ships.map((ship, index) => {
     return (
       <div
         id={index}
         key={index}
         style={{
-          backgroundColor: "lightgrey",
-          border: "1px solid black",
+          backgroundColor: currentShip < index ? "lightgrey" : "aqua",
+          border: currentShip < index ? "1px solid grey" : "1px solid blue",
           width: ship.size * 15 + "px",
           height: "10px",
           marginBottom: "5px",
@@ -18,6 +19,7 @@ export const Ships = () => {
       ></div>
     );
   });
+
   return (
     <div
       style={{

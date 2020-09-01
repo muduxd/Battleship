@@ -1,48 +1,22 @@
 import React, { useRef, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { DllPlugin } from "webpack";
+import { useSelector, useDispatch } from "react-redux";
+import { nextShip, placeShip } from "../Redux/actions";
 
 var index = 0;
 var isPlaced = false;
-var el = [];
 
 //MOUSE EVENTS
 
-const boardMouseOver = (e) => {
-  var row = e.target.getAttribute("row");
-  var col = e.target.getAttribute("collumn");
-  var col1 = col;
-  if (row && col) {
-    e.target.style.backgroundColor = "aqua";
-  }
-  // for (var i = 1; i <= 5; i++) {
-  //   var col1 = parseInt(col1) + 1;
-  //   var aux = document.getElementById(String(row) + String(col1));
-  //   el.push(aux);
-  // }
-  console.log(el);
-};
-
 const boardMouseOut = (e) => {
-  var row = e.target.getAttribute("row");
-  var col = e.target.getAttribute("collumn");
-  var col1 = parseInt(col) + 1;
-  var el1 = document.getElementById(String(row) + String(col1));
-  e.target.style.backgroundColor = "white";
-  el1.style.backgroundColor = "white";
-};
-
-const leftClick = () => {
-  var el = document.getElementById(index);
-  el.style.border = "1px solid blue";
-
-  el.style.backgroundColor = "aqua";
-  console.log(index);
-  if (index < 4) {
-    index++;
-  } else {
-    isPlaced = true;
-  }
+  // var row = e.target.getAttribute("row");
+  // var col = e.target.getAttribute("collumn");
+  // var col1 = parseInt(col);
+  // if (col1 + sizeArr[index] > 10) {
+  //   col1 = 10 - sizeArr[index];
+  // }
+  // for (var i = 1; i <= sizeArr[index]; i++) {
+  //   el[i].style.backgroundColor = "white";
+  // }
 };
 
 const rightClick = () => {
@@ -50,17 +24,48 @@ const rightClick = () => {
 };
 
 export const Grid = () => {
+  const dispatch = useDispatch();
+  const ships = useSelector((state) => state.ships);
+  const shipPos = useSelector((state) => state.board.currentShip);
+  const currentSize = ships[shipPos].size;
+
+  const leftClick = () => {
+    if (shipPos < 4) {
+      dispatch(nextShip());
+    }
+  };
+
+  const boardMouseOver = (e) => {
+    var row = e.target.getAttribute("row");
+    var col = e.target.getAttribute("collumn");
+
+    row = parseInt(row);
+    col = parseInt(col);
+
+    const arr = [];
+    for (var i = 0; i < currentSize; i++) {
+      arr.push([col + i, row]);
+    }
+    dispatch(
+      placeShip({
+        cords: arr,
+        shipPos,
+      })
+    );
+  };
+
   const boardEl = useRef(null);
   useEffect(() => {
     boardEl.current.addEventListener("click", leftClick);
     boardEl.current.addEventListener("contextmenu", rightClick);
     boardEl.current.addEventListener("mouseover", boardMouseOver);
     boardEl.current.addEventListener("mouseout", boardMouseOut);
-  });
-
-  const shipSize = useSelector((state) => state.listShips);
-  const sizeArr = shipSize.map((ship) => {
-    return ship.size;
+    return () => {
+      boardEl.current.removeEventListener("click", leftClick);
+      boardEl.current.removeEventListener("contextmenu", rightClick);
+      boardEl.current.removeEventListener("mouseover", boardMouseOver);
+      boardEl.current.removeEventListener("mouseout", boardMouseOut);
+    };
   });
 
   return (
@@ -123,9 +128,15 @@ export const Grid = () => {
 
 const RenderSquares = () => {
   const board = useSelector((state) => state.board);
+  const positions = board.boatPos.flat();
+
   var arrResult = [];
   for (var i = 0; i < board.gridSize; i++) {
     for (var j = 0; j < board.gridSize; j++) {
+      const found = positions.find(
+        (element) => element[0] == j && element[1] == i
+      );
+
       arrResult.push(
         <div
           id={String(i) + String(j)}
@@ -133,6 +144,9 @@ const RenderSquares = () => {
           collumn={j}
           key={String(i) + String(j)}
           className="square"
+          style={{
+            backgroundColor: found ? "aqua" : "white",
+          }}
         ></div>
       );
     }
