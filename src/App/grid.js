@@ -7,18 +7,6 @@ var isPlaced = false;
 
 //MOUSE EVENTS
 
-const boardMouseOut = (e) => {
-  // var row = e.target.getAttribute("row");
-  // var col = e.target.getAttribute("collumn");
-  // var col1 = parseInt(col);
-  // if (col1 + sizeArr[index] > 10) {
-  //   col1 = 10 - sizeArr[index];
-  // }
-  // for (var i = 1; i <= sizeArr[index]; i++) {
-  //   el[i].style.backgroundColor = "white";
-  // }
-};
-
 const rightClick = () => {
   console.log("right");
 };
@@ -44,6 +32,9 @@ export const Grid = () => {
 
     const arr = [];
     for (var i = 0; i < currentSize; i++) {
+      if (col + currentSize > 10) {
+        col = 10 - currentSize;
+      }
       arr.push([col + i, row]);
     }
     dispatch(
@@ -59,12 +50,10 @@ export const Grid = () => {
     boardEl.current.addEventListener("click", leftClick);
     boardEl.current.addEventListener("contextmenu", rightClick);
     boardEl.current.addEventListener("mouseover", boardMouseOver);
-    boardEl.current.addEventListener("mouseout", boardMouseOut);
     return () => {
       boardEl.current.removeEventListener("click", leftClick);
       boardEl.current.removeEventListener("contextmenu", rightClick);
       boardEl.current.removeEventListener("mouseover", boardMouseOver);
-      boardEl.current.removeEventListener("mouseout", boardMouseOut);
     };
   });
 
