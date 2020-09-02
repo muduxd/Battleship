@@ -3,24 +3,27 @@ import { useSelector, useDispatch } from "react-redux";
 import { nextShip, placeShip } from "../Redux/actions";
 
 var index = 0;
-var isPlaced = false;
-
-//MOUSE EVENTS
-
-const rightClick = () => {
-  console.log("right");
-};
 
 export const Grid = () => {
   const dispatch = useDispatch();
   const ships = useSelector((state) => state.ships);
   const shipPos = useSelector((state) => state.board.currentShip);
-  const currentSize = ships[shipPos].size;
+
+  if (index >= 5) {
+    currentSize = 0;
+  } else {
+    var currentSize = ships[shipPos].size;
+  }
+
+  //MOUSE EVENTS
 
   const leftClick = () => {
-    if (shipPos < 4) {
-      dispatch(nextShip());
-    }
+    index++;
+    dispatch(nextShip());
+  };
+
+  const rightClick = () => {
+    console.log("right");
   };
 
   const boardMouseOver = (e) => {
@@ -109,6 +112,7 @@ export const Grid = () => {
           {<RenderSquares />}
         </div>
       </div>
+      <div>{<RenderButtons />}</div>
     </div>
   );
 };

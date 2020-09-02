@@ -45,7 +45,6 @@ export const board = (state = initialState.board, action) => {
   if (action.type === PLACE_SHIP) {
     const boatPos = [...state.boatPos];
     boatPos[action.payload.shipPos] = action.payload.cords;
-    console.log(action.payload.shipPos);
     return {
       ...state,
       boatPos,

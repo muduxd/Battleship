@@ -10,8 +10,18 @@ export const Ships = () => {
         id={index}
         key={index}
         style={{
-          backgroundColor: currentShip < index ? "lightgrey" : "aqua",
-          border: currentShip < index ? "1px solid grey" : "1px solid blue",
+          backgroundColor:
+            currentShip == index
+              ? "lightgreen"
+              : currentShip < index
+              ? "lightgrey"
+              : "aqua",
+          border:
+            currentShip == index
+              ? "1px solid green"
+              : currentShip < index
+              ? "1px solid grey"
+              : "1px solid blue",
           width: ship.size * 15 + "px",
           height: "10px",
           marginBottom: "5px",
