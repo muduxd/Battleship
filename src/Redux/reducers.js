@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { NEXT_SHIP, PLACE_SHIP } from "./actions";
+import { NEXT_SHIP, PLACE_SHIP, RESET_STATE } from "./actions";
 
 export const initialState = {
   board: {
@@ -49,6 +49,9 @@ export const board = (state = initialState.board, action) => {
       ...state,
       boatPos,
     };
+  }
+  if (action.type === RESET_STATE) {
+    return (state = initialState.board);
   }
   return state;
 };

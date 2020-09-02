@@ -1,8 +1,10 @@
 import React, { useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { nextShip, placeShip } from "../Redux/actions";
+import { nextShip, placeShip, resetState } from "../Redux/actions";
 
 var index = 0;
+var status = "Place your ships";
+var vertical = false;
 
 export const Grid = () => {
   const dispatch = useDispatch();
@@ -11,6 +13,7 @@ export const Grid = () => {
 
   if (index >= 5) {
     currentSize = 0;
+    status = "All ships are in place!";
   } else {
     var currentSize = ships[shipPos].size;
   }
@@ -23,7 +26,7 @@ export const Grid = () => {
   };
 
   const rightClick = () => {
-    console.log("right");
+    vertical = !vertical;
   };
 
   const boardMouseOver = (e) => {
@@ -35,10 +38,14 @@ export const Grid = () => {
 
     const arr = [];
     for (var i = 0; i < currentSize; i++) {
-      if (col + currentSize > 10) {
+      if (col + currentSize > 10 && vertical === false) {
         col = 10 - currentSize;
       }
-      arr.push([col + i, row]);
+      if (vertical) {
+        arr.push([row, col + i]);
+      } else {
+        arr.push([col + i, row]);
+      }
     }
     dispatch(
       placeShip({
@@ -47,6 +54,19 @@ export const Grid = () => {
       })
     );
   };
+
+  //BUTTONS
+
+  const StartButton = () => {
+    console.log("Start");
+  };
+
+  const ResetButton = () => {
+    dispatch(resetState());
+    index = 0;
+  };
+
+  //BOARD EVENTS
 
   const boardEl = useRef(null);
   useEffect(() => {
@@ -60,6 +80,43 @@ export const Grid = () => {
     };
   });
 
+  const RenderButtons = () => {
+    const arr = [];
+    var startButton = (
+      <button
+        key="start"
+        onClick={StartButton}
+        style={{
+          color: "white",
+          backgroundColor: "aqua",
+          border: "1px solid black",
+          width: "50px",
+          height: "20px",
+          marginRight: "40px",
+        }}
+      >
+        Start
+      </button>
+    );
+    var resetButton = (
+      <button
+        key="reset"
+        onClick={ResetButton}
+        style={{
+          color: "aqua",
+          backgroundColor: "white",
+          border: "1px solid black",
+          width: "50px",
+          height: "20px",
+        }}
+      >
+        Reset
+      </button>
+    );
+    arr.push(startButton, resetButton);
+    return arr;
+  };
+
   return (
     <div
       style={{
@@ -68,6 +125,7 @@ export const Grid = () => {
         width: "420px",
       }}
     >
+      <div>{status}</div>
       <div
         style={{
           display: "flex",
@@ -112,7 +170,9 @@ export const Grid = () => {
           {<RenderSquares />}
         </div>
       </div>
-      <div>{<RenderButtons />}</div>
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        {<RenderButtons />}
+      </div>
     </div>
   );
 };
@@ -150,15 +210,6 @@ const RenderSquares = () => {
 const RenderNumbers = () => {
   var arr = [];
   for (var i = 1; i <= 10; i++) {
-    if (i === 1) {
-      arr.push(
-        <div
-          key="EMPTY"
-          className="side"
-          style={{ width: "35px", height: "25px" }}
-        ></div>
-      );
-    }
     arr.push(
       <div key={i} className="side" style={{ width: "35px", height: "25px" }}>
         {i}
@@ -179,9 +230,4 @@ const RenderLetters = () => {
     i = i.substring(0, 0) + String.fromCharCode(i.charCodeAt(0) + 1);
   }
   return arr;
-};
-
-const RenderButtons = () => {
-  var startButton = <button>Start</button>;
-  return startButton;
 };
