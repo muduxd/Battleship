@@ -5,6 +5,7 @@ import { nextShip, placeShip, resetState } from "../Redux/actions";
 var index = 0;
 var status = "Place your ships";
 var vertical = false;
+var started = false;
 
 export const Grid = () => {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ export const Grid = () => {
     status = "All ships are in place!";
   } else {
     var currentSize = ships[shipPos].size;
+    status = "Place your ships";
   }
 
   //MOUSE EVENTS
@@ -40,9 +42,13 @@ export const Grid = () => {
     for (var i = 0; i < currentSize; i++) {
       if (col + currentSize > 10 && vertical === false) {
         col = 10 - currentSize;
+      } else {
+        if (row + currentSize > 10 && vertical === true) {
+          row = 10 - currentSize;
+        }
       }
       if (vertical) {
-        arr.push([row, col + i]);
+        arr.push([col, row + i]);
       } else {
         arr.push([col + i, row]);
       }
@@ -58,27 +64,13 @@ export const Grid = () => {
   //BUTTONS
 
   const StartButton = () => {
-    console.log("Start");
+    started = true;
   };
 
   const ResetButton = () => {
     dispatch(resetState());
     index = 0;
   };
-
-  //BOARD EVENTS
-
-  const boardEl = useRef(null);
-  useEffect(() => {
-    boardEl.current.addEventListener("click", leftClick);
-    boardEl.current.addEventListener("contextmenu", rightClick);
-    boardEl.current.addEventListener("mouseover", boardMouseOver);
-    return () => {
-      boardEl.current.removeEventListener("click", leftClick);
-      boardEl.current.removeEventListener("contextmenu", rightClick);
-      boardEl.current.removeEventListener("mouseover", boardMouseOver);
-    };
-  });
 
   const RenderButtons = () => {
     const arr = [];
@@ -117,60 +109,84 @@ export const Grid = () => {
     return arr;
   };
 
-  return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        width: "420px",
-      }}
-    >
-      <div>{status}</div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          width: "25px",
-          height: "350px",
-          marginTop: "26px",
-        }}
-      >
-        {<RenderLetters />}
-      </div>
-      <div
-        style={{
-          width: "350px",
-          height: "375px",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            width: "385px",
-            height: "25px",
-          }}
-        >
-          {<RenderNumbers />}
-        </div>
+  //BOARD EVENTS
 
+  const boardEl = useRef(null);
+  useEffect(() => {
+    boardEl.current.addEventListener("click", leftClick);
+    boardEl.current.addEventListener("contextmenu", rightClick);
+    boardEl.current.addEventListener("mouseover", boardMouseOver);
+    return () => {
+      boardEl.current.removeEventListener("click", leftClick);
+      boardEl.current.removeEventListener("contextmenu", rightClick);
+      boardEl.current.removeEventListener("mouseover", boardMouseOver);
+    };
+  });
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          width: "420px",
+        }}
+      >
+        <div>{status}</div>
         <div
-          ref={boardEl}
-          id="grid"
           style={{
-            border: "1px solid black",
-            width: "350px",
-            height: "350px",
             display: "flex",
-            flexWrap: "wrap",
+            flexDirection: "column",
+            width: "25px",
+            height: "350px",
+            marginTop: "26px",
           }}
         >
-          {<RenderSquares />}
+          {<RenderLetters />}
+        </div>
+        <div
+          style={{
+            width: "350px",
+            height: "375px",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              width: "385px",
+              height: "25px",
+            }}
+          >
+            {<RenderNumbers />}
+          </div>
+
+          <div
+            ref={boardEl}
+            id="grid"
+            style={{
+              border: "1px solid black",
+              width: "350px",
+              height: "350px",
+              display: "flex",
+              flexWrap: "wrap",
+            }}
+          >
+            {<RenderSquares />}
+          </div>
         </div>
       </div>
-      <div style={{ display: "flex", flexDirection: "row" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          width: "50px",
+          height: "20px",
+          visibility: index >= 5 ? "visible" : "hidden",
+        }}
+      >
         {<RenderButtons />}
       </div>
     </div>

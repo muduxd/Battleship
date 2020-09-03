@@ -4,6 +4,8 @@ import { appReducer } from "../Redux/reducers.js";
 import { Provider } from "react-redux";
 import { Ships } from "./ships";
 import { Grid } from "./grid";
+import { EnemyGrid } from "./enemygrid";
+import { EnemyShips } from "./enemyships";
 
 const store = createStore(
   appReducer,
@@ -33,6 +35,8 @@ const App = () => {
       >
         <Ships />
         <Grid />
+        <EnemyGrid />
+        <EnemyShips />
       </div>
     </Provider>
   );
