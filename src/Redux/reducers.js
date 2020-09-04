@@ -100,11 +100,10 @@ export const game = (state = initialState.game, action) => {
 };
 
 const shot = (col, row, enemypos) => {
-  console.log({ enemypos });
-  return;
   const positions = enemypos.flat();
-  console.log(positions);
-  const found = positions.find((element) => element[0] == j && element[1] == i);
+  const found = positions.find(
+    (element) => element[0] == col && element[1] == row
+  );
   if (found) {
     console.log("hit");
   } else {
