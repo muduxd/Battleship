@@ -7,6 +7,7 @@ const DIST_DIR = path.resolve(__dirname, "dist");
 module.exports = {
   mode: "development",
   entry: `${SRC_DIR}/index.js`,
+  devtool: "cheap-module-eval-source-map",
   output: {
     path: DIST_DIR,
     filename: "main.js",

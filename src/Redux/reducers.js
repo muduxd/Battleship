@@ -1,10 +1,24 @@
 import { combineReducers } from "redux";
-import { NEXT_SHIP, PLACE_SHIP, RESET_STATE } from "./actions";
+import {
+  NEXT_SHIP,
+  PLACE_SHIP,
+  RESET_STATE,
+  START_GAME,
+  ENEMY_FLOAT,
+  SHOT_FIRED,
+} from "./actions";
 
 export const initialState = {
   board: {
     gridSize: 10,
     boatPos: [],
+    shotPos: [],
+    currentShip: 0,
+  },
+  enemyboard: {
+    gridSize: 10,
+    boatPos: [],
+    shotPos: [],
     currentShip: 0,
   },
   ships: [
@@ -29,6 +43,9 @@ export const initialState = {
       size: 2,
     },
   ],
+  game: {
+    started: false,
+  },
 };
 
 export const ships = (state = initialState.ships) => {
@@ -56,4 +73,74 @@ export const board = (state = initialState.board, action) => {
   return state;
 };
 
-export const appReducer = combineReducers({ ships, board });
+export const enemyBoard = (state = initialState.enemyboard, action) => {
+  if (action.type === ENEMY_FLOAT) {
+    return {
+      ...state,
+      boatPos: renderFloat(action.ships, action.gridSize),
+    };
+  }
+  if (action.type === SHOT_FIRED) {
+    return {
+      ...state,
+      shotPos: shot(action.col, action.row),
+    };
+  }
+  return state;
+};
+
+export const game = (state = initialState.game, action) => {
+  if (action.type === START_GAME) {
+    return {
+      ...state,
+      started: true,
+    };
+  }
+  return state;
+};
+
+const shot = (col, row) => {
+  const positions = enemyboard.boatPos.flat();
+  console.log(positions);
+  const found = positions.find((element) => element[0] == j && element[1] == i);
+  if (found) {
+    console.log("hit");
+  } else {
+    console.log("miss");
+  }
+};
+
+const renderFloat = (ships, gridSize) => {
+  const result = [];
+
+  for (var index = 0; index <= 4; index++) {
+    result[index] = [];
+
+    var randomCol = Math.floor(Math.random() * 10);
+    var randomRow = Math.floor(Math.random() * 10);
+
+    var vertical = Math.random() >= 0.5;
+    var currentSize = ships[index].size;
+
+    if (randomCol + currentSize > gridSize && vertical === false) {
+      randomCol = gridSize - currentSize;
+    } else {
+      if (randomRow + currentSize > gridSize && vertical === true) {
+        randomRow = gridSize - currentSize;
+      }
+    }
+
+    for (var i = 0; i < currentSize; i++) {
+      let cords;
+      if (vertical) {
+        cords = [randomCol, randomRow + i];
+      } else {
+        cords = [randomCol + i, randomRow];
+      }
+      result[index][i] = cords;
+    }
+  }
+  return result;
+};
+
+export const appReducer = combineReducers({ ships, board, game, enemyBoard });

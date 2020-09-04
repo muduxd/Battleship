@@ -10,18 +10,8 @@ export const EnemyShips = () => {
         id={index}
         key={index}
         style={{
-          backgroundColor:
-            currentShip == index
-              ? "lightgreen"
-              : currentShip < index
-              ? "lightgrey"
-              : "aqua",
-          border:
-            currentShip == index
-              ? "1px solid green"
-              : currentShip < index
-              ? "1px solid grey"
-              : "1px solid blue",
+          backgroundColor: "aqua",
+          border: "1px solid blue",
           width: ship.size * 15 + "px",
           height: "10px",
           marginBottom: "5px",
@@ -33,10 +23,9 @@ export const EnemyShips = () => {
   return (
     <div
       style={{
-        width: "110px",
+        width: "130px",
         display: "flex",
         flexDirection: "column",
-        marginRight: "30px",
       }}
     >
       <h1
@@ -47,15 +36,7 @@ export const EnemyShips = () => {
       >
         Enemy Ships
       </h1>
-      <div
-        style={{
-          alignItems: "flex-end",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        {mapArr}
-      </div>
+      <div style={{ display: "flex", flexDirection: "column" }}>{mapArr}</div>
     </div>
   );
 };

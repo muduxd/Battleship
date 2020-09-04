@@ -1,16 +1,24 @@
 import React, { useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { nextShip, placeShip, resetState } from "../Redux/actions";
+import {
+  nextShip,
+  placeShip,
+  resetState,
+  startGame,
+  enemyFloat,
+} from "../Redux/actions";
+import { EnemyGrid } from "./enemygrid";
+import { EnemyShips } from "./enemyships";
 
 var index = 0;
 var status = "Place your ships";
 var vertical = false;
-var started = false;
 
 export const Grid = () => {
   const dispatch = useDispatch();
   const ships = useSelector((state) => state.ships);
   const shipPos = useSelector((state) => state.board.currentShip);
+  var started = useSelector((state) => state.game.started);
 
   if (index >= 5) {
     currentSize = 0;
@@ -27,7 +35,8 @@ export const Grid = () => {
     dispatch(nextShip());
   };
 
-  const rightClick = () => {
+  const rightClick = (e) => {
+    e.preventDefault();
     vertical = !vertical;
   };
 
@@ -64,7 +73,8 @@ export const Grid = () => {
   //BUTTONS
 
   const StartButton = () => {
-    started = true;
+    dispatch(startGame());
+    dispatch(enemyFloat(ships, 10));
   };
 
   const ResetButton = () => {
@@ -178,17 +188,29 @@ export const Grid = () => {
           </div>
         </div>
       </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          width: "50px",
-          height: "20px",
-          visibility: index >= 5 ? "visible" : "hidden",
-        }}
-      >
-        {<RenderButtons />}
-      </div>
+      {started ? (
+        <div>
+          <div>
+            <EnemyGrid />
+          </div>
+          <div>
+            <EnemyShips />
+          </div>
+        </div>
+      ) : null}
+
+      {index >= 5 && started == false ? (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            width: "50px",
+            height: "20px",
+          }}
+        >
+          {<RenderButtons />}
+        </div>
+      ) : null}
     </div>
   );
 };
