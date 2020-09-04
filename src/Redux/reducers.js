@@ -83,7 +83,7 @@ export const enemyBoard = (state = initialState.enemyboard, action) => {
   if (action.type === SHOT_FIRED) {
     return {
       ...state,
-      shotPos: shot(action.col, action.row),
+      shotPos: shot(action.col, action.row, state.boatPos),
     };
   }
   return state;
@@ -99,8 +99,10 @@ export const game = (state = initialState.game, action) => {
   return state;
 };
 
-const shot = (col, row) => {
-  const positions = enemyboard.boatPos.flat();
+const shot = (col, row, enemypos) => {
+  console.log({ enemypos });
+  return;
+  const positions = enemypos.flat();
   console.log(positions);
   const found = positions.find((element) => element[0] == j && element[1] == i);
   if (found) {
