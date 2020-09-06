@@ -1,11 +1,14 @@
 import React, { useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { nextShip, placeShip, resetState, shotFired } from "../Redux/actions";
+import { shotFired } from "../Redux/actions";
 
 export const EnemyGrid = () => {
+  var index = 0;
+
   const dispatch = useDispatch();
-  const ships = useSelector((state) => state.ships);
-  const shipPos = useSelector((state) => state.enemyBoard.currentShip);
+  const boats = useSelector((state) => state.enemyBoard.boatPos);
+  const shots = useSelector((state) => state.enemyBoard.shotPos);
+  const boatArr = boats.flat();
 
   //MOUSE EVENTS
 
@@ -15,7 +18,19 @@ export const EnemyGrid = () => {
 
     row = parseInt(row);
     col = parseInt(col);
+
     dispatch(shotFired(col, row));
+    index++;
+
+    for (var i = 0; i <= boatArr.length; i++) {
+      if (boatArr[i] === shots[index]) {
+        var ok = 1;
+      }
+    }
+
+    if (ok) {
+      console.log(index);
+    }
   };
 
   //BOARD EVENTS

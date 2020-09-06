@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 
 export const EnemyShips = () => {
   const ships = useSelector((state) => state.ships);
-  const currentShip = useSelector((state) => state.board.currentShip);
   const mapArr = ships.map((ship, index) => {
     return (
       <div

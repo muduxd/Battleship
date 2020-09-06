@@ -83,7 +83,9 @@ export const enemyBoard = (state = initialState.enemyboard, action) => {
   if (action.type === SHOT_FIRED) {
     return {
       ...state,
-      shotPos: shot(action.col, action.row, state.boatPos),
+      shotPos: state.shotPos.concat(
+        shot(action.col, action.row, state.boatPos)
+      ),
     };
   }
   return state;
@@ -100,14 +102,17 @@ export const game = (state = initialState.game, action) => {
 };
 
 const shot = (col, row, enemypos) => {
+  const arr = [];
   const positions = enemypos.flat();
   const found = positions.find(
     (element) => element[0] == col && element[1] == row
   );
   if (found) {
-    console.log("hit");
+    arr.push([col, row]);
+    return arr;
   } else {
-    console.log("miss");
+    arr.push([col, row]);
+    return arr;
   }
 };
 
