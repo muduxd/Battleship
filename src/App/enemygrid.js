@@ -22,6 +22,7 @@ export const EnemyGrid = () => {
       col = parseInt(col);
 
       dispatch(shotFired(col, row));
+      dispatch(yTurn());
 
       console.log(boatArr);
 
