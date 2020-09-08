@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { shotFired } from "../Redux/actions";
+import { shotFired, eTurn } from "../Redux/actions";
 
 export const EnemyGrid = () => {
   var index = 0;
@@ -23,6 +23,7 @@ export const EnemyGrid = () => {
 
       dispatch(shotFired(col, row));
       dispatch(yTurn());
+      dispatch(eTurn());
 
       console.log(boatArr);
 

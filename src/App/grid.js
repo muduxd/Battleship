@@ -7,6 +7,7 @@ import {
   startGame,
   enemyFloat,
   eTurn,
+  yTurn,
 } from "../Redux/actions";
 import { EnemyGrid } from "./enemygrid";
 import { EnemyShips } from "./enemyships";
@@ -39,6 +40,7 @@ export const Grid = () => {
       var randomCol = Math.floor(Math.random() * 10);
       var randomRow = Math.floor(Math.random() * 10);
       dispatch(eTurn());
+      dispatch(yTurn());
     }
   };
 
