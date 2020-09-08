@@ -6,6 +6,8 @@ import {
   START_GAME,
   ENEMY_FLOAT,
   SHOT_FIRED,
+  ENEMY_TURN,
+  YOUR_TURN,
 } from "./actions";
 
 export const initialState = {
@@ -14,12 +16,14 @@ export const initialState = {
     boatPos: [],
     shotPos: [],
     currentShip: 0,
+    enemyTurn: false,
   },
   enemyboard: {
     gridSize: 10,
     boatPos: [],
     shotPos: [],
     currentShip: 0,
+    yourTurn: true,
   },
   ships: [
     {
@@ -70,6 +74,12 @@ export const board = (state = initialState.board, action) => {
   if (action.type === RESET_STATE) {
     return (state = initialState.board);
   }
+  if (action.type === ENEMY_TURN) {
+    return {
+      ...state,
+      yourTurn: !enemyTurn,
+    };
+  }
   return state;
 };
 
@@ -86,6 +96,12 @@ export const enemyBoard = (state = initialState.enemyboard, action) => {
       shotPos: state.shotPos.concat(
         shot(action.col, action.row, state.boatPos)
       ),
+    };
+  }
+  if (action.type === YOUR_TURN) {
+    return {
+      ...state,
+      enemyTurn: !yourTurn,
     };
   }
   return state;

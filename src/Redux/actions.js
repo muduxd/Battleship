@@ -4,6 +4,8 @@ export const RESET_STATE = "RESET_STATE";
 export const START_GAME = "START_GAME";
 export const ENEMY_FLOAT = "ENEMY_FLOAT";
 export const SHOT_FIRED = "SHOT_FIRED";
+export const YOUR_TURN = "YOUR_TURN";
+export const ENEMY_TURN = "ENEMY_TURN";
 
 export const nextShip = () => {
   return {
@@ -43,5 +45,16 @@ export const shotFired = (col, row) => {
     type: SHOT_FIRED,
     col,
     row,
+  };
+};
+
+export const yTurn = () => {
+  return {
+    type: YOUR_TURN,
+  };
+};
+export const eTurn = () => {
+  return {
+    type: ENEMY_TURN,
   };
 };

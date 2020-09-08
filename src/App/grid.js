@@ -18,6 +18,7 @@ export const Grid = () => {
   const dispatch = useDispatch();
   const ships = useSelector((state) => state.ships);
   const shipPos = useSelector((state) => state.board.currentShip);
+  const enemyTurn = useSelector((state) => state.board.enemyTurn);
   var started = useSelector((state) => state.game.started);
 
   if (index >= 5) {
@@ -33,6 +34,10 @@ export const Grid = () => {
   const leftClick = () => {
     index++;
     dispatch(nextShip());
+    if (enemyTurn) {
+      var randomCol = Math.floor(Math.random() * 10);
+      var randomRow = Math.floor(Math.random() * 10);
+    }
   };
 
   const rightClick = (e) => {

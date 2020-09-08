@@ -8,28 +8,33 @@ export const EnemyGrid = () => {
   const dispatch = useDispatch();
   const boats = useSelector((state) => state.enemyBoard.boatPos);
   const shots = useSelector((state) => state.enemyBoard.shotPos);
+  const yourTurn = useSelector((state) => state.enemyBoard.yourTurn);
   const boatArr = boats.flat();
 
   //MOUSE EVENTS
 
   const leftClick = (e) => {
-    var row = e.target.getAttribute("row");
-    var col = e.target.getAttribute("collumn");
+    if (yourTurn) {
+      var row = e.target.getAttribute("row");
+      var col = e.target.getAttribute("collumn");
 
-    row = parseInt(row);
-    col = parseInt(col);
+      row = parseInt(row);
+      col = parseInt(col);
 
-    dispatch(shotFired(col, row));
-    index++;
+      dispatch(shotFired(col, row));
 
-    for (var i = 0; i <= boatArr.length; i++) {
-      if (boatArr[i] === shots[index]) {
-        var ok = 1;
-      }
-    }
+      console.log(boatArr);
 
-    if (ok) {
-      console.log(index);
+      // for (var i = 0; i <= boatArr.length; i++) {
+      //   for (var j = 0; j <= shots.length; j++) {
+      //     if (shots[j] == boatArr[i]) {
+      //       index++;
+      //       console.log(index);
+      //     } else {
+      //       index = 0;
+      //     }
+      //   }
+      // }
     }
   };
 
